@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 import osUtils from 'os-utils';
 
 
@@ -24,4 +26,14 @@ function getCpuUsage() {
 
 function getMemoryUsage() {
   return 1 - osUtils.freememPercentage();
+}
+
+function getStorageData() {
+  const stats = fs.statfsSync(process.platform === 'win32' ? 'C:\\' : '/');
+  const total = stats.bsize * stats.blocks;
+  const free = stats.bfree * stats.bsize;
+  return {
+    total: Math.floor(total / 1_000_000_000),
+    usage: 1 - free / total,
+  };
 }
