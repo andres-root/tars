@@ -38,7 +38,7 @@ export function getCpuUsage(): Promise<number> {
   });
 }
 
-export function getRamUsage(): number {
+export function getRamUsage() {
   return 1 - osUtils.freememPercentage();
 }
 
