@@ -8,7 +8,7 @@ export function isDev(): boolean {
 
 export function ipcMainHandle<Key extends keyof EventPayloadMapping>(
   key: Key,
-  handler: () => EventPayloadMapping[Key]
+  handler: (...args: any[]) => EventPayloadMapping[Key]
 ) {
   ipcMain.handle(key, (event) => {
     if (event.senderFrame) { // TODO: check if this is the correct way to get the frame
@@ -27,7 +27,7 @@ export function ipcWebContentsSend<Key extends keyof EventPayloadMapping>(
 }
 
 export function validateEventFrame(frame: WebFrameMain) {
-  if (isDev() && new URL(frame.url).host === 'localhost:5125') {
+  if (isDev() && new URL(frame.url).host === 'localhost:5123') {
     return;
   }
   if (frame.url !== pathToFileURL(getUIPath()).toString()) {

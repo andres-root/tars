@@ -1,5 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
-import path from 'path'
+import { app, BrowserWindow } from 'electron'
 import { isDev } from './utils.js'
 import { getStaticData, pollResources } from './resourceManager.js'
 import { getPreloadPath, getUIPath } from './pathResolver.js'

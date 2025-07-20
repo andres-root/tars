@@ -7,12 +7,19 @@ electron.contextBridge.exposeInMainWorld('electron', {
     });
   },
   getStaticData: () => ipcInvoke('getStaticData'),
+  getOpenAICompletionsAsStream: () => ipcInvokeChat('getOpenAICompletionsAsStream'),
 } satisfies Window['electron']);
 
 function ipcInvoke<Key extends keyof EventPayloadMapping>(
-    key: Key
-  ): Promise<EventPayloadMapping[Key]> {
-    return electron.ipcRenderer.invoke(key);
+  key: Key,
+): Promise<EventPayloadMapping[Key]> {
+  return electron.ipcRenderer.invoke(key);
+}
+
+function ipcInvokeChat<Key extends keyof EventPayloadMapping>(
+  key: Key,
+): EventPayloadMapping[Key] {
+  return electron.ipcRenderer.invoke(key);
 }
   
 function ipcOn<Key extends keyof EventPayloadMapping>(

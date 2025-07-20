@@ -10,6 +10,8 @@ type StaticData = {
   totalMemoryGB: number;
 };
 
+type Chunks = AsyncIterable<OpenAI.Chat.Completions.ChatCompletionChunk>;
+
 // type View = 'CPU' | 'RAM' | 'STORAGE';
 
 // type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
@@ -17,6 +19,8 @@ type StaticData = {
 type EventPayloadMapping = {
   statistics: Statistics;
   getStaticData: StaticData;
+  getOpenAICompletionsAsStream: Promise<Chunks>;
+  chatChunk: OpenAI.Chat.Completions.ChatCompletionChunk;
   // changeView: View;
   // sendFrameAction: FrameWindowAction;
 };
@@ -27,6 +31,7 @@ interface Window {
   electron: {
     subscribeStatistics: (callback: (statistics: Statistics) => void) => UnsubscribeFunction;
     getStaticData: () => Promise<StaticData>;
+    getOpenAICompletionsAsStream: () => Promise<Chunks>;
     // subscribeChangeView: (
     //   callback: (view: View) => void
     // ) => UnsubscribeFunction;
